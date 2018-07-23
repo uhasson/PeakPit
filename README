@@ -1,0 +1,36 @@
+July 2018.
+
+Uri Hasson.
+uri@hasson.org; uri.hasson@unitn.it
+www.hasson.org
+
+
+** README for implementing peak/pit visibility graphs and distance calculation
+
+
+These four files should get on started in replicating and understanding the climate analysis in
+Hasson et al. A combinatorial framework to quantify peak/pit asymmetries in complex dynamics.
+Scientific Reportsvolume 8, Article number: 3557 (2018) 
+
+This example works with climate data and requires
+library(ncdf4)
+library(moments)
+
+Related files:
+1. air.2m.gauss.2015.nc is a sample input file
+2. results.2015.topdown.txt is the results file for that year, for sanity checks
+3. getVisibilityFunction.r is a function written by Thomas Jagger which constructs a natural VG from a time series
+
+General notes:
+For those intending to apply in other domains, the crucial elements are derivation of net1 and net2 
+net1 <- get.visibility(testTS) ; # get the visibility of original
+net2 <- get.visibility(revTestTS); # get visibility for inverse
+
+pulling the degree distribution
+updist <- net1$pk
+downdist <- net2$pk
+
+and then creating two new degree distributions that are matched in their maximal bin value
+(fill in empty histograms with as many degree slots as max of up or down)
+
+Only at that point is it possible to derive a distance between the two degree distributions.
